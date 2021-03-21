@@ -1,0 +1,16 @@
+<div class="entry">
+
+  {{#title}}
+  <h1>hello {{this}}</h1>
+  {{/title}}
+
+  {{^title}}
+  not avalable
+  {{/title}}
+
+  <div class="body">{{message}}</div>
+  {{!-- {{#each studentArray}} {{> card}} {{/each}} --}}
+   {{#each photos}} {{> card imgSrc=this.url}} {{/each}}
+
+
+</div>

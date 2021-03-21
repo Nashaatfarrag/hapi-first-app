@@ -1,29 +1,57 @@
-// 'use strict';
+
+'use strict';
 
 const Hapi = require('@hapi/hapi');
+const Vision = require('vision');
+const hbs = require('hbs');
+const Inert = require('@hapi/inert'); //this is a hapi module / plugin 
+
+const photos = require("./data/images.json")
+
+const server = Hapi.server({
+    port: process.env.PORT || 3000,
+    host: 'localhost'
+});
 
 const init = async () => {
+    await server.register(Inert);  // Static file and directory handlers for hapi.js.
+    await server.register(Vision); // Template rendering support for hapi.js.
 
-    const server = Hapi.server({
-        port: process.env.PORT || 3000,
-        host: 'localhost'
+    server.views({
+        engines: {
+            hbs: require('hbs')
+        },
+        relativeTo: __dirname,
+        partialsPath: "./templates/partials",
+        layoutPath: './templates/layout',
+        helpersPath: './templates/helpers',
+        path: './templates',
+        layout: "default-layout",
+
     });
 
+
+
+    // h.view
     server.route({
         method: 'GET',
-        path: '/',
-        handler: (request, h) => {
-
-            return 'Hello World!';
+        path: '/index',
+        handler: (req, h) => {
+            // console.log(data)
+            return h.view('index', {
+                title: 'Using handlebars in Hapi',
+                message: 'Tutorial',
+                studentArray: [' nashaat', "mohamed"] , 
+                photos : photos.slice(1,20)
+            });
         }
     });
 
     await server.start();
-    console.log('Server running on %s', server.info.uri);
+    console.log(`Server running at: ${server.info.uri}`);
 };
 
 process.on('unhandledRejection', (err) => {
-
     console.log(err);
     process.exit(1);
 });
