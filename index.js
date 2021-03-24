@@ -4,11 +4,17 @@
 const Hapi = require('@hapi/hapi');
 const Vision = require('vision');
 const hbs = require('hbs');
+const Path = require('path');
 const Inert = require('@hapi/inert'); //this is a hapi module / plugin 
 
 const photos = require("./data/images.json")
 
 const server = Hapi.server({
+    // routes: {
+    //     files: {
+    //         relativeTo: Path.join(__dirname, 'css')
+    //     }  
+    // },
     port: process.env.PORT || 3000,
     host: 'localhost'
 });
@@ -32,17 +38,37 @@ const init = async () => {
 
 
 
-    // h.view
     server.route({
         method: 'GET',
-        path: '/index',
+        path: '/hello',
+        handler: (req) => {
+            // console.log(data)
+            return "hello world"
+        }
+    });
+
+    server.route({
+        method: 'GET',
+        path: '/public/{param*}',
+        handler: {
+
+            directory: {
+                path: Path.join(__dirname, 'public')
+            }
+        }
+    })
+
+    // h.view  
+    server.route({
+        method: 'GET',
+        path: '/',
         handler: (req, h) => {
             // console.log(data)
             return h.view('index', {
                 title: 'Using handlebars in Hapi',
                 message: 'Tutorial',
-                studentArray: [' nashaat', "mohamed"] , 
-                photos : photos.slice(1,20)
+                studentArray: ['  nashaat', "mohamed"],
+                photos: photos.slice(1, 20)
             });
         }
     });

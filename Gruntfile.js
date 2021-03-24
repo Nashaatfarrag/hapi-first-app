@@ -1,18 +1,73 @@
-const sass = require('node-sass')
+const sass = require('node-sass');
+
 
 module.exports = function (grunt) {
+    // require('load-grunt-tasks')(grunt);
+
 
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        uglify: {
+        jshint: {
             options: {
-                banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+                esversion: 6, // this option to ignore const error with js hint 
+                curly: true,
+                eqeqeq: true,
+                eqnull: true,
+                browser: true,
+                globals: {
+                    jQuery: true
+                },
             },
-            build: {
-                src: 'src/<%= pkg.name %>.js',
-                dest: 'build/<%= pkg.name %>.min.js'
-            }
+            all: ['Gruntfile.js']
+        },
+        watch: {
+            // options: {
+            //     livereload: true
+            // },
+            sass: {
+                files: '**/**/*.scss',
+                tasks: ['sass'],
+                options: {
+                    livereload: true,
+                }
+            },
+            js: {
+                files: ['**/*.js', '**/*.hbs'],
+                tasks: ['jshint'],
+                options: {
+                    spawn: false,
+                },
+            },
+        },
+        // uglify: {
+        //     options: {
+        //         banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+        //     },
+        //     build: {
+        //         src: 'src/<%= pkg.name %>.js',
+        //         dest: 'build/<%= pkg.name %>.min.js'
+        //     }
+        // },
+
+        // shell: {
+        //     connect: {
+        //         command: 'node index.js'
+        //     }
+        // },
+        nodemon: {
+            dev: {
+                script: 'index.js'
+            },
+            env: {
+                PORT: '8181'
+            },
+            // cwd: __dirname,
+            // ignore: ['node_modules/**'],
+            // ext: 'js,coffee',
+            // watch: ['server'],
+            // delay: 1000,
+            // legacyWatch: true
         },
         sass: {
             options: {
@@ -21,7 +76,7 @@ module.exports = function (grunt) {
             },
             dist: {
                 files: {
-                    'css/main.css': 'css/scss/styles.scss'
+                    'public/css/main.css': 'public/css/scss/styles.scss'
                 }
             }
 
@@ -31,8 +86,12 @@ module.exports = function (grunt) {
     // Load the plugin that provides the "uglify" task.
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-sass');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-nodemon');
 
     // Default task(s).
-    grunt.registerTask('default', ['sass']);
+    grunt.registerTask('default', ['sass', "jshint", "watch"]);
+    // grunt.registerTask('dev', ["watch"]);
 
 };

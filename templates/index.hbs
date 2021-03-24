@@ -1,16 +1,19 @@
-<div class="entry">
 
-  {{#title}}
+
+  {{!-- {{#title}}
   <h1>hello {{this}}</h1>
   {{/title}}
 
   {{^title}}
   not avalable
-  {{/title}}
+  {{/title}} --}}
 
-  <div class="body">{{message}}</div>
+  {{!-- <div class="body ">{{message }}</div> --}}
+  {{!-- {{capitablize 'hi'}} --}}
   {{!-- {{#each studentArray}} {{> card}} {{/each}} --}}
-   {{#each photos}} {{> card imgSrc=this.url}} {{/each}}
+<div class="flex-container">
 
-
+  {{#each photos}} {{> card imgSrc=this.url}} {{/each}}
 </div>
+
+
