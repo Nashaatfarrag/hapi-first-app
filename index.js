@@ -2,22 +2,17 @@
 'use strict';
 
 const Hapi = require('@hapi/hapi');
-const Vision = require('vision');
-const hbs = require('hbs');
-const Path = require('path');
 const Inert = require('@hapi/inert'); //this is a hapi module / plugin 
+const Vision = require('vision');
+const Path = require('path');
 
-const photos = require("./data/images.json")
+const routes = require("./routes")
 
 const server = Hapi.server({
-    // routes: {
-    //     files: {
-    //         relativeTo: Path.join(__dirname, 'css')
-    //     }  
-    // },
     port: process.env.PORT || 3000,
     host: 'localhost'
 });
+
 
 const init = async () => {
     await server.register(Inert);  // Static file and directory handlers for hapi.js.
@@ -33,20 +28,11 @@ const init = async () => {
         helpersPath: './templates/helpers',
         path: './templates',
         layout: "default-layout",
+        // context: { hellomsg: "hello kjkj"  }
 
     });
 
-
-
-    server.route({
-        method: 'GET',
-        path: '/hello',
-        handler: (req) => {
-            // console.log(data)
-            return "hello world"
-        }
-    });
-
+    server.route(routes);
     server.route({
         method: 'GET',
         path: '/public/{param*}',
@@ -57,22 +43,6 @@ const init = async () => {
             }
         }
     })
-
-    // h.view  
-    server.route({
-        method: 'GET',
-        path: '/',
-        handler: (req, h) => {
-            // console.log(data)
-            return h.view('index', {
-                title: 'Using handlebars in Hapi',
-                message: 'Tutorial',
-                studentArray: ['  nashaat', "mohamed"],
-                photos: photos.slice(1, 20)
-            });
-        }
-    });
-
     await server.start();
     console.log(`Server running at: ${server.info.uri}`);
 };
