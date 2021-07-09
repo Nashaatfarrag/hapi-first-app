@@ -1,59 +1,71 @@
 body {
   font: 100% Helvetica, sans-serif; }
 
+img {
+  max-width: 100%;
+  max-height: 100%; }
+
 .container {
   offset: 50px;
   padding: 1%; }
 
 .flex-container {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around; }
+  flex-flow: row wrap;
+  align-items: flex-start;
+  justify-content: center; }
 
 .card-footer {
   color: white;
   position: absolute;
   bottom: 4px;
-  text-align: center;
-  left: 49%; }
+  right: 4px;
+  padding: 4px; }
+
+.fill {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; }
 
 .img-card {
   margin: 5px;
   border-radius: 2%;
-  padding: 4px;
-  height: 200px;
-  background-image: url("https://source.unsplash.com/random");
+  width: 300px;
   background-size: cover;
   background-repeat: no-repeat;
-  cursor: url("/public/zoom-in.png"), auto; }
+  cursor: zoom-in; }
+  .img-card img {
+    border-radius: 4px;
+    max-width: 300px; }
 
 .img-card:hover {
   background-image: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.5)); }
 
-/* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 600px) {
-  .flex-item {
-    flex-basis: 100%; } }
+#img-details {
+  display: flex;
+  width: 100%;
+  padding: 1%;
+  justify-items: center;
+  background-color: antiquewhite;
+  border-radius: 4px;
+  max-height: 50vh; }
+  #img-details img {
+    max-height: 100%; }
 
-/* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (min-width: 600px) {
-  .flex-item {
-    flex-basis: 50%; } }
+.img-zoom-lens {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  /*set the size of the lens:*/
+  width: 40px;
+  height: 40px; }
 
-/* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (min-width: 768px) {
-  .flex-item {
-    flex-basis: 33.3%; } }
-
-/* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {
-  .flex-item {
-    flex-basis: 25%; } }
-
-/* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {
-  .flex-item {
-    flex-basis: 20%; } }
+.img-zoom-result {
+  border: 1px solid #d4d4d4;
+  /*set the size of the result div:*/
+  width: 400px;
+  height: 400px; }
 
 .nav {
   height: 50px;
@@ -127,5 +139,28 @@ body {
   .nav > #nav-check:checked ~ .nav-links {
     height: calc(100vh - 50px);
     overflow-y: auto; } }
+
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  /* Safari */
+  animation: spin 2s linear infinite; }
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(360deg); } }
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }
 
 /*# sourceMappingURL=main.css.map */

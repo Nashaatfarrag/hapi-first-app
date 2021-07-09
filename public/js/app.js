@@ -9,29 +9,50 @@ window.onscroll = function (ev) {
 
 
 
-        setTimeout(addPhotos(), 5000)
+        addPhotos()
 
     }
 };
 
 
 
+function myGreatFunction(val) {
+    console.log(val)
+    $("#img-details").remove()
+    $.post("/template/photo-details",
+        {
+            name: "Donald Duck",
+            city: "Duckburg"
+        },
+        function (data, status) {
+            $(".flex-container")[0].innerHTML = data + $(".flex-container")[0].innerHTML
+            // Initiate zoom effect:
+imageZoom("myimage", "myresult");
+        });
+    // $.ajax({
+    //     url: ""
+    // }).done(data => {
 
+    //     $(".flex-container")[0].innerHTML += data
+    //     // $(".loader").remove()
+    // })
+}
 
 function addPhotos() {
-    let sum = ""
-    for (let i = 0; i < 20; i++) {
+    // $(".flex-container")[0].innerHTML += `<div class="loader"></div>`
+    setTimeout(() => {
+
         $.ajax({
-            url: "/img"
+            url: "/img?amount=24"
         }).done(data => {
-            sum += data
+
+            $(".flex-container")[0].innerHTML += data
+            // $(".loader").remove()
         })
-
-
-    }
-    console.log(sum)
-    $(".flex-container")[0].innerHTML += sum
+    }, 2000)
 }
+
+
 
 
 

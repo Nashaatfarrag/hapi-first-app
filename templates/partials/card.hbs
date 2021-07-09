@@ -2,10 +2,14 @@
 
 
 
-<div class="img-card flex-item" style="position: relative;">
-    <img style="max-width: 100%" />
+<div onclick="myGreatFunction({{{json this }}})" class="img-card flex-item" style="position: relative;">
 
-    <div class="card-footer" >
+    <div class="fill">
+
+        <img src={{randomize-img "https://source.unsplash.com/random?water=" }} />
+    </div>
+
+    <div class="card-footer">
         <i class="fas fa-heart"></i>
         <i class="fas fa-share-square"></i>
     </div>
